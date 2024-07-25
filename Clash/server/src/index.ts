@@ -1,9 +1,12 @@
 import express, { Application, Request, Response } from "express";
 import "dotenv/config";
-import path from 'path'
-import {fileURLToPath} from "url"
+import path from "path";
+import ejs from "ejs";
+import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+import { sendEmail } from "./config/mail.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app: Application = express();
 const PORT = process.env.PORT || 7000;
@@ -13,11 +16,16 @@ app.use(express.urlencoded({ extended: false }));
 
 //* Set a view engine
 
-app.set("view engine","ejs")
-app.set("views", path.resolve(__dirname, "./views"))
+app.set("view engine", "ejs");
+app.set("views", path.resolve(__dirname, "./views"));
 
-app.get("/", (req: Request, res: Response) => {
-  return res.render("welcome");
+app.get("/", async (req: Request, res: Response) => {
+  const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
+    name: "Mohit Soni",
+  });
+
+  await sendEmail("nelim11546@leacore.com", "Testing SMTP", html);
+  return res.json({ msg: "Email send successfully!" });
 });
 
 app.listen(PORT, () => {
