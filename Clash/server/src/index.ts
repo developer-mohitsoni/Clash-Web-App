@@ -4,8 +4,6 @@ import path from "path";
 import ejs, { name } from "ejs";
 import { fileURLToPath } from "url";
 
-import { sendEmail } from "./config/mail.js";
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app: Application = express();
@@ -20,20 +18,23 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./views"));
 
 app.get("/", async (req: Request, res: Response) => {
-  // const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
-  //   name: "Mohit Soni",
-  // });
+  const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
+    name: "Mohit Soni",
+  });
 
   // await sendEmail("nelim11546@leacore.com", "Testing SMTP", html);
 
-  await emailQueue.add(emailQueueName, {name: "Mohit Soni", age:22})
+  await emailQueue.add(emailQueueName, {
+    to: "nelim11546@leacore.com",
+    subject: "Testing Queue Email",
+    body: html,
+  });
   return res.json({ msg: "Email send successfully!" });
 });
 
-
 //* Queues
 
-import "./jobs/index.js"
+import "./jobs/index.js";
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 
 app.listen(PORT, () => {
