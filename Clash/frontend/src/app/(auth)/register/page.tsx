@@ -1,5 +1,5 @@
 import { registerAction } from "@/actions/authActions";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/common/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -52,7 +52,7 @@ const register = () => {
             />
           </div>
           <div className="mt-4">
-            <Button className="w-full">Submit</Button>
+            <SubmitButton/>
           </div>
         </form>
 
