@@ -1,14 +1,22 @@
-"use client"
+"use client";
 
-import React from 'react'
+import React from "react";
+import { useFormState } from "react-dom/";
 import { registerAction } from "@/actions/authActions";
 import { SubmitButton } from "@/components/common/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const Register = () => {
+  const initState = {
+    status: 0,
+    message: "",
+    errors: {},
+  };
+
+  const [state, formAction] = useFormState(registerAction, initState);
   return (
-    <form action={registerAction}>
+    <form action={formAction}>
       <div className="mt-4">
         <Label htmlFor="name">Name</Label>
         <Input
@@ -17,6 +25,7 @@ const Register = () => {
           name="name"
           placeholder="Enter your name..."
         />
+        <span className="text-red-500">{state.errors?.email}</span>
       </div>
       <div className="mt-4">
         <Label htmlFor="email">Email</Label>
@@ -26,6 +35,7 @@ const Register = () => {
           name="email"
           placeholder="Enter your email..."
         />
+        <span className="text-red-500">{state.errors?.name}</span>
       </div>
       <div className="mt-4">
         <Label htmlFor="password">Password</Label>
@@ -35,6 +45,7 @@ const Register = () => {
           name="password"
           placeholder="Enter your password..."
         />
+        <span className="text-red-500">{state.errors?.password}</span>
       </div>
       <div className="mt-4">
         <Label htmlFor="cpassword">Confirm Password</Label>
@@ -44,12 +55,13 @@ const Register = () => {
           name="confirm_password"
           placeholder="Confirm your password..."
         />
+        <span className="text-red-500">{state.errors?.confirm_password}</span>
       </div>
       <div className="mt-4">
         <SubmitButton />
       </div>
     </form>
   );
-}
+};
 
-export default Register
+export default Register;
