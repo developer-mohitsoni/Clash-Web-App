@@ -5,7 +5,12 @@ import axios, { AxiosError } from "axios";
 
 export const registerAction = async (prevState: any, formData: FormData) => {
   try {
-    const {data} = await axios.post(REGISTER_URL, formData);
+    const { data } = await axios.post(REGISTER_URL, {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      confirm_password: formData.get("confirm_password"),
+    });
 
     return {
         status: 200,
