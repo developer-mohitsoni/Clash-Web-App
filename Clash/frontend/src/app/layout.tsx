@@ -6,6 +6,8 @@ import { Inter as FontSans } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 
+import { Toaster } from "@/components/ui/sonner";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -29,6 +31,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <Toaster richColors position="top-right" />
         {children}
       </body>
     </html>
