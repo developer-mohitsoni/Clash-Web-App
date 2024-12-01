@@ -8,7 +8,7 @@ export function SubmitButton() {
 
   return (
     <Button className="w-full" disabled={pending}>
-      {pending ? "Processing..." : "Submit"}
+      {pending ? "Processing...." : "Submit"}
     </Button>
   );
 }
