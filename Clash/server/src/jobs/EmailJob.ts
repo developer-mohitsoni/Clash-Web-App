@@ -28,3 +28,15 @@ export const queueWorker = new Worker(
     connection: redisConnection,
   }
 );
+
+queueWorker.on("completed", (job: Job) => {
+  console.log(`Job with ID ${job.id} has been completed!`);
+});
+
+queueWorker.on("failed", (job: Job | undefined, err: Error) => {
+  if (job) {
+    console.error(`Job with ID ${job.id} has failed with error:`, err);
+  } else {
+    console.error(`A job has failed with error:`, err);
+  }
+});
