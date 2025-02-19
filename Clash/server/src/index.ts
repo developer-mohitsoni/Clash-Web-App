@@ -29,7 +29,7 @@ app.get("/", async (req: Request, res: Response) => {
   // await sendEmail("nelim11546@leacore.com", "Testing SMTP", html);
 
   await emailQueue.add(emailQueueName, {
-    to: "nelim11546@leacore.com",
+    to: "ms7085422@gmail.com",
     subject: "Testing Queue Email",
     body: html,
   });
