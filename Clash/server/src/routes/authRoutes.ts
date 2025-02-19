@@ -12,7 +12,7 @@ const router = Router();
 router.post("/register", async (req: Request, res: Response) => {
   try {
     const body = req.body;
-    const payload = await registerSchema.parse(body);
+    const payload = registerSchema.parse(body);
 
     let user = await prisma.user.findUnique({
       where: {
@@ -28,22 +28,21 @@ router.post("/register", async (req: Request, res: Response) => {
     }
 
     //* Encrypt the password
-    const salt = await bcrypt.genSalt(10);
-    payload.password = await bcrypt.hash(payload.password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    payload.password = bcrypt.hashSync(payload.password, salt);
 
     await prisma.user.create({
       data: {
         name: payload.name,
         email: payload.email,
-        password: payload.password
-      }
+        password: payload.password,
+      },
     });
 
     return res.json({
+      status: 200,
       message: "Account Created Successfully",
     });
-
-    return res.json(payload);
   } catch (error) {
     if (error instanceof ZodError) {
       const errors = formateError(error);
