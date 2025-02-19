@@ -17,7 +17,7 @@ export const renderEmailEjs = async (
 ): Promise<string> => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  const html:string = await ejs.renderFile(
+  const html: string = await ejs.renderFile(
     __dirname + `/views/emails/${filename}.ejs`,
     payload
   );
